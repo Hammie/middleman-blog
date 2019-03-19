@@ -337,7 +337,8 @@ module Middleman
       # @return [String]
       ##
       def path_part(part)
-        @_path_parts ||= Blog::UriTemplates.extract_params(blog_data.source_template, path)
+        source_path = is_a?(Middleman::Sitemap::ProxyResource) ? target : path
+        @_path_parts ||= Blog::UriTemplates.extract_params(blog_data.source_template, source_path)
         @_path_parts[part.to_s]
       end
     end

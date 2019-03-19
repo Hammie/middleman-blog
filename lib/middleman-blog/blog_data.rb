@@ -133,7 +133,9 @@ module Middleman
             next
           end
 
-          if (params = extract_source_params(resource.path))
+          resource_path = resource.is_a?(Middleman::Sitemap::ProxyResource) ? resource.target : resource.path
+
+          if (params = extract_source_params(resource_path))
             article = convert_to_article(resource)
             next unless publishable?(article)
 
@@ -146,7 +148,7 @@ module Middleman
 
             @_articles << article
 
-          elsif (params = extract_subdir_params(resource.path))
+          elsif (params = extract_subdir_params(resource_path))
             # It's not an article, but it's the companion files for an article
             # (in a subdirectory named after the article)
             # figure out the matching article for this subdirectory file
